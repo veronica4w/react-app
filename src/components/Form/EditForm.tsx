@@ -3,32 +3,35 @@ import React from 'react'
 import {  useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
 import { configs } from '../../config';
-import { propsForm } from '../../intefaces/props.interface';
-import { addPosts } from '../../redux/crudSlice';
+import { propsEditForm } from '../../intefaces/props.interface';
+import { updatePosts } from '../../redux/crudSlice';
 import Loader from '../Loader/Loader';
 import Toast from '../Toast/Toast';
 
-const Form = (props:propsForm) => {
+
+
+const EditForm = (props:propsEditForm) => {
   const { register, handleSubmit,reset,  formState: { errors } } = useForm();
   const [toast,setToast] = React.useState(false);
   const dispatch = useDispatch();
   const [loader,setLoader] = React.useState(false);
+  const {id, body, title} = props.formData
   const onSubmit = async(data:any) =>{
     try {
-      setLoader(true)
-      // not specified Id and UserId because it will be handled in Backend user id from req:
-      const res = await fetch(configs.jsonApi+'/posts',{
-         method: 'POST', 
+      setLoader(true);
+      console.log('data', data)
+      const res = await fetch(configs.jsonApi+'/posts/'+id,{
+         method: 'PUT', 
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
       })
-      dispatch(addPosts(data));
+      dispatch(updatePosts({...props.formData,title:data.title,body:data.body}));
       if(res.status>=200 && res.status < 300){
         setToast(true);
-        props.setOpen(false)
         reset();
+        props.setOpen(false);
       }
       setLoader(false)
     } catch (error) {
@@ -41,34 +44,36 @@ const Form = (props:propsForm) => {
         open={props.open}
         onClose={()=>{
           props.setOpen(false);
-                  reset();
+          reset();
 
         }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={props.style}>
         <h3 onClick={()=>props.setOpen(false)} style={{display:'flex',justifyContent:'flex-end',marginTop:'-3.5rem',marginRight:"-3.5rem",cursor:'pointer'}}>X</h3>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add New Post
+            Update  Post
           </Typography>
            <Input
            placeholder='Title'
            inputComponent="input"
             sx={{margin:'1rem'}}
+            defaultValue={title}
             {...register("title",{required:true})} 
             />
-             {errors.title && <small >This field is required *</small>}
+             {errors.title && <small  >This field is required *</small>}
             <Input 
             sx={{margin:'1rem'}}
+            defaultValue={body}
             inputComponent="textarea"
              placeholder='Body'
             {...register("body", { required: true })} />
             { errors.body && <small>This field is required*</small>}
-             <Button type="submit">Post</Button>
+             <Button type="submit">Update</Button>
          
         </Box>
       </Modal>
       {
-        toast && <Toast open={toast} message={'Successfully Saved'} handleClose={()=>setToast(false)} />
+        toast && <Toast open={toast} message={'Successfully Updated'} handleClose={()=>setToast(false)} />
       }
       {
         loader && <Loader />
@@ -77,4 +82,4 @@ const Form = (props:propsForm) => {
   )
 }
 
-export default Form
+export default EditForm

@@ -17,7 +17,7 @@ const UserPosts = () => {
       </Button>
       <Form style={formStyle} open={open} setOpen={setOpen} />
       {
-        state &&  <Card card={state} />
+        state &&  <Card edit={true} card={state} />
       }
     </div>
   )

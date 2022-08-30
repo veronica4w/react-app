@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Posts } from "../intefaces/crud.interface";
 
 const crudSlice = createSlice({
   name:'crud',
@@ -18,10 +19,17 @@ const crudSlice = createSlice({
     addPosts:(state,action) => {
       let data :any = [{...action.payload,id:state.userPost.length+1,userId:state.userId},...state.userPost];
       state.userPost = data
-    }
+    },
+    updatePosts:(state,action)=>{
+      let data:any =  state.userPost.map((post:Posts)=>{
+        return post.id===action.payload.id ? {...post,...action.payload} :post
+      })
+      state.userPost = data
+    } 
+
    
   }
-})
+});
 
-export const { addAllPosts , addUserId, addPosts} = crudSlice.actions
+export const { addAllPosts , addUserId, addPosts ,updatePosts} = crudSlice.actions
 export default crudSlice.reducer;
