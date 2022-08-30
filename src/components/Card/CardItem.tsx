@@ -8,7 +8,7 @@ const CardItem = (props:propsCardItem) => {
   const { title,body  } = props.card
   return (
     <div>
-      <Card sx={{ maxWidth: 345 , display:'flex',margin:'1rem'}}>
+      <Card sx={{ maxWidth: 655, width:'22rem',height:'15rem' , display:'flex',margin:'1rem',boxShadow:'3px 3px 5px'}}>
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">
           {title}
