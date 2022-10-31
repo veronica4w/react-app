@@ -1,4 +1,5 @@
-import { Box, Button, Input, Modal,  Typography } from '@mui/material'
+import { CloseSharp } from '@mui/icons-material';
+import { Backdrop, Box, Button, Input, Modal,  Typography } from '@mui/material'
 import React from 'react'
 import {  useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
@@ -38,6 +39,13 @@ const Form = (props:propsForm) => {
   return (
     <div>
       <Modal
+        aria-labelledby="transition-modal-title"
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+
         open={props.open}
         onClose={()=>{
           props.setOpen(false);
@@ -46,7 +54,7 @@ const Form = (props:propsForm) => {
         }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={props.style}>
-        <h3 onClick={()=>props.setOpen(false)} style={{display:'flex',justifyContent:'flex-end',marginTop:'-3.5rem',marginRight:"-3.5rem",cursor:'pointer'}}>X</h3>
+        <h3 onClick={()=>props.setOpen(false)} style={{display:'flex',justifyContent:'flex-end',marginTop:'-3.5rem',marginRight:"-3.5rem",cursor:'pointer'}}><CloseSharp /> </h3>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add New Post
           </Typography>
@@ -56,14 +64,17 @@ const Form = (props:propsForm) => {
             sx={{margin:'1rem'}}
             {...register("title",{required:true})} 
             />
-             {errors.title && <small >This field is required *</small>}
+             {errors.title && <small data-testid="error" >This field is required *</small>}
             <Input 
             sx={{margin:'1rem'}}
             inputComponent="textarea"
+            multiline
+            rows={2}
+            maxRows={6}
              placeholder='Body'
             {...register("body", { required: true })} />
-            { errors.body && <small>This field is required*</small>}
-             <Button type="submit">Post</Button>
+            { errors.body && <small data-testid="error">This field is required*</small>}
+             <Button variant='contained' data-testid="post"  type="submit">Post</Button>
          
         </Box>
       </Modal>

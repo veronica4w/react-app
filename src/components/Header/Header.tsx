@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Dashboard,  LocalPostOfficeOutlined } from '@mui/icons-material'
 import { Breadcrumbs,  } from '@mui/material'
 import React from 'react'
@@ -7,11 +8,12 @@ import  './header.css'
 import { useDispatch } from 'react-redux';
 import { addUserId } from '../../redux/crudSlice';
 const Header = () => {
+  const userId = localStorage.getItem('userId');
   const dispatch = useDispatch();
     const generateUserId = () => {
     try {
-      if(localStorage.getItem('userId')){
-        dispatch(addUserId({userId:localStorage.getItem('userId')}))
+      if(userId){
+        dispatch(addUserId({userId}))
       }
       else{
         localStorage.setItem('userId',uuid.v4())
@@ -27,6 +29,7 @@ const Header = () => {
     <div style={{margin:'5%', width:'20vw',height:'1vh'}}>
        <Breadcrumbs aria-label="breadcrumb">
         <Link
+        data-testid="link"
         className="link"
           to="/dashboard"
         >
@@ -35,6 +38,7 @@ const Header = () => {
         </Link>
         <Link
         className="link"     
+        data-testid="link"
           to="/posts"
         >
           <LocalPostOfficeOutlined sx={{ mr: 0.5 }} fontSize="inherit" />

@@ -1,13 +1,20 @@
-export const formStyle =
-{
-  position: 'absolute' as 'absolute',
+export const formStyle = {
+  display: 'flex',
+  flexDirection:'column',
+  // width: 400,
+  // bgcolor: 'background.primary',
+  // border: '2px solid #000',
+  // boxShadow: 24,
+  // p: 4,
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
+  border: '.5px solid #000',
+  borderRadius:"1rem",
+  boxShadow: 12,
   transition:'.7s',
   p: 4,
 }

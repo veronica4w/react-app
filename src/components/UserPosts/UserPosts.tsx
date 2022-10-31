@@ -1,3 +1,4 @@
+import { AddCircleRounded } from "@mui/icons-material";
 import { Button,  } from "@mui/material";
 import React from "react"
 import { useSelector } from "react-redux";
@@ -12,12 +13,12 @@ const UserPosts = () => {
     <div
     //  style={{display:'flex',justifyContent:'space-around'}}
     >
-      <Button onClick={()=>setOpen(true)} variant="contained" color="success">
+      <Button  onClick={()=>setOpen(true)} variant='contained' startIcon={<AddCircleRounded />}>
         Add New Post
       </Button>
       <Form style={formStyle} open={open} setOpen={setOpen} />
       {
-        state &&  <Card edit={true} card={state} />
+        state &&  <Card data-testid="card" edit={true} card={state} />
       }
     </div>
   )

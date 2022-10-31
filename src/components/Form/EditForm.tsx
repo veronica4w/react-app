@@ -1,3 +1,4 @@
+import {  CloseSharp } from '@mui/icons-material';
 import { Box, Button, Input, Modal,  Typography } from '@mui/material'
 import React from 'react'
 import {  useForm } from 'react-hook-form'
@@ -49,7 +50,7 @@ const EditForm = (props:propsEditForm) => {
         }}
       >
         <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={props.style}>
-        <h3 onClick={()=>props.setOpen(false)} style={{display:'flex',justifyContent:'flex-end',marginTop:'-3.5rem',marginRight:"-3.5rem",cursor:'pointer'}}>X</h3>
+        <h3 onClick={()=>props.setOpen(false)} style={{display:'flex',justifyContent:'flex-end',marginTop:'-3.5rem',marginRight:"-3.5rem",cursor:'pointer'}}><CloseSharp /> </h3>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Update  Post
           </Typography>
@@ -65,7 +66,11 @@ const EditForm = (props:propsEditForm) => {
             sx={{margin:'1rem'}}
             defaultValue={body}
             inputComponent="textarea"
-             placeholder='Body'
+            multiline
+            rows={2}
+            maxRows={6}
+
+             placeholder='Edit your content ...'
             {...register("body", { required: true })} />
             { errors.body && <small>This field is required*</small>}
              <Button type="submit">Update</Button>

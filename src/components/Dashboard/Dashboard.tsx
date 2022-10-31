@@ -30,10 +30,10 @@ const Dashboard = () => {
     <div>
       {
         loading ?
-         <Loader />
+         <Loader data-testid="loader" />
         :
         <>
-        <Card card={state} />
+        <Card data-testid="card" card={state} />
         </>
       }
 
